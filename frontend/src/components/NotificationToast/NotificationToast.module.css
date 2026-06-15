@@ -1,0 +1,66 @@
+.stack {
+  position: fixed;
+  top: calc(var(--nav-height) + 16px);
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 300;
+  max-width: 340px;
+  width: 90vw;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-size: 14px;
+  animation: slideIn 0.18s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.success {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  border-color: #a3e9c0;
+}
+
+.error {
+  background: var(--color-error-bg);
+  color: var(--color-error-text);
+  border-color: #f5b3b3;
+}
+
+.info {
+  background: #e8f0fe;
+  color: #1a4eab;
+  border-color: #b3ccf8;
+}
+
+.message {
+  flex: 1;
+  line-height: 1.45;
+}
+
+.close {
+  background: none;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.65;
+  padding: 0 2px;
+  flex-shrink: 0;
+}
+
+.close:hover {
+  opacity: 1;
+}

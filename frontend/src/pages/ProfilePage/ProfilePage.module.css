@@ -1,0 +1,91 @@
+.page {
+  padding: 48px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.profileCard {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.username {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.fullname {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-bottom: 20px;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  padding: 10px 14px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  border-radius: var(--radius-sm);
+  outline: none;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+.input:focus {
+  border-color: var(--color-border-strong);
+}
+
+.saveBtn,
+.logoutBtn {
+  width: 100%;
+  background: var(--color-accent);
+  color: var(--color-accent-fg);
+  border: none;
+  padding: 11px;
+  font-size: 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+}
+
+.saveBtn:hover,
+.logoutBtn:hover {
+  opacity: 0.88;
+}
+
+.scoreCard {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px 32px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.scoreTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.scoreRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.scoreRow:last-child {
+  border-bottom: none;
+}

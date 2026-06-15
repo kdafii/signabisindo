@@ -1,0 +1,18 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  border-top: 1px solid var(--color-border);
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: auto;
+}
+
+.brand strong {
+  font-weight: 700;
+}
+
+.copy {
+  color: var(--color-text-hint);
+}

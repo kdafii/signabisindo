@@ -1,125 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
-import DetectionPage from './DetectionPage'
+import { RouterProvider, useRouter, PAGES } from "./context/RouterContext"
+import { AuthProvider } from "./context/AuthContext"
+import { NotificationProvider } from "./context/NotificationContext"
+import { Navbar, Footer, NotificationToast } from "./components"
+import LoginPage    from "./pages/AuthPage/LoginPage"
+import RegisterPage from "./pages/AuthPage/RegisterPage"
+import HomePage     from "./pages/HomePage/HomePage"
+import ProfilePage  from "./pages/ProfilePage/ProfilePage"
+import DictionaryPage from "./pages/DictionaryPage/DictionaryPage"
+import QuizPage     from "./pages/QuizPage/QuizPage"
 
-function App() {
-  const [count, setCount] = useState(0)
+// Pages without Navbar/Footer
+const BARE_PAGES = new Set([PAGES.LOGIN, PAGES.REGISTER])
+
+function AppInner() {
+  const { currentPage } = useRouter()
+
+  const bare = BARE_PAGES.has(currentPage)
+
+  const page = {
+    [PAGES.LOGIN]:          <LoginPage />,
+    [PAGES.REGISTER]:       <RegisterPage />,
+    [PAGES.HOME]:           <HomePage />,
+    [PAGES.PROFILE]:        <ProfilePage />,
+    [PAGES.DICTIONARY]:     <DictionaryPage />,
+    [PAGES.DICT_CAMERA]:    <DictionaryPage />,
+    [PAGES.QUIZ_LEVEL]:     <QuizPage />,
+    [PAGES.QUIZ_QUESTIONS]: <QuizPage />,
+    [PAGES.QUIZ_RESULT]:    <QuizPage />,
+  }[currentPage] ?? <HomePage />
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      {!bare && <Navbar />}
+      {page}
+      {!bare && <Footer />}
+      <NotificationToast />
+    </div>
   )
-
-  // return <DetectionPage/>
 }
 
-export default App
+export default function App() {
+  return (
+    <AuthProvider>
+      <RouterProvider>
+        <NotificationProvider>
+          <AppInner />
+        </NotificationProvider>
+      </RouterProvider>
+    </AuthProvider>
+  )
+}
