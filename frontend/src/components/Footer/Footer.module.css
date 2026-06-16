@@ -1,6 +1,7 @@
 .footer {
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: space-between;
   padding: 20px 48px;
   border-top: 1px solid var(--color-border);

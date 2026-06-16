@@ -55,22 +55,29 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(6, minmax(80px, 100px));
+  gap: 20px;
+  justify-content: center;
 }
 
 .alphaCard {
-  border: 1.5px solid var(--color-border-strong);
   aspect-ratio: 1;
+  font-size: 32px;
+}
+
+.alphaCard {
+  width: 80px;
+  height: 80px;
+
+  border: 1.5px solid var(--color-border-strong);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+
+  font-size: 32px;
   font-weight: 700;
   cursor: pointer;
   border-radius: var(--radius-sm);
-  background: var(--color-bg);
-  transition: background 0.12s;
 }
 
 .alphaCard:hover {
@@ -90,6 +97,7 @@
   background: #d9d9d9;
   margin: 0 auto 16px;
   border-radius: var(--radius-sm);
+  display: block;
 }
 
 /* ── Camera ── */
@@ -118,4 +126,89 @@
 .feedbackBar.wrong {
   background: var(--color-error-bg);
   color: var(--color-error-text);
+}
+
+/* ── Camera layout: split kolom ── */
+.cameraLayout {
+  display: grid;
+  grid-template-columns: 1fr 320px;  /* naik dari 280px */
+  gap: 32px;
+  align-items: start;
+}
+
+.cameraCol {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Kolom kanan ── */
+.sideCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.sideSignImage {
+  width: 140px;
+  height: 140px;
+  background: #d9d9d9;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.sideHint {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin: 0;
+}
+
+/* ── Mini grid huruf ── */
+.miniGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;        /* naik dari 6px */
+  width: 100%;
+}
+
+.miniCard {
+  border: 1.5px solid var(--color-border-strong);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  transition: background 0.12s;
+}
+
+.miniCard:hover {
+  background: var(--color-surface);
+}
+
+.miniCardActive {
+  background: var(--color-accent);
+  color: var(--color-accent-fg);
+  border-color: var(--color-accent);
+}
+
+/* ── Responsive: mobile stack ── */
+@media (max-width: 700px) {
+  .cameraLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .sideCol {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .miniGrid {
+    grid-template-columns: repeat(8, 1fr);
+  }
 }

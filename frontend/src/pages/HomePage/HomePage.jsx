@@ -20,7 +20,7 @@ export default function HomePage() {
         <button className={styles.card} onClick={() => navigate(PAGES.QUIZ_LEVEL)}>
           <h2 className={styles.cardTitle}>Kuis</h2>
           <p className={styles.cardDesc}>
-            Pelajari 26 Alfabet BISINDO dan latihan menggunakan kamera
+            Uji kemampuanmu mengenali dan mempraktikkan gestur lewat kamera
           </p>
         </button>
       </div>

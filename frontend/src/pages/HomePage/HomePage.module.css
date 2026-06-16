@@ -4,8 +4,9 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: calc(100vh - var(--nav-height));
+  height: calc(90vh - var(--nav-height));
   padding: 80px 48px;
+  overflow: hidden;
 }
 
 .heading {

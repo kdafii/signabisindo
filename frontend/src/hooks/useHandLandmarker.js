@@ -36,6 +36,7 @@ export function useHandLandmarker(videoRef, canvasRef, onLandmarks, options = {}
   const lastPredictRef   = useRef(0)
   const onLandmarksRef   = useRef(onLandmarks)
   const enabledRef       = useRef(enabled)
+  const streamRef       = useRef(null)
 
   // Keep callback ref in sync — avoids stale closure in rAF loop
   useEffect(() => { onLandmarksRef.current = onLandmarks }, [onLandmarks])
@@ -115,6 +116,7 @@ export function useHandLandmarker(videoRef, canvasRef, onLandmarks, options = {}
     const stream = await navigator.mediaDevices.getUserMedia({
       video: { width: 1280, height: 720, facingMode: "user" },
     })
+
     const video = videoRef.current
     video.srcObject = stream
     await new Promise(resolve => { video.onloadedmetadata = resolve })
@@ -136,12 +138,43 @@ export function useHandLandmarker(videoRef, canvasRef, onLandmarks, options = {}
 
   // ── Main effect ─────────────────────────────────────────────────────────────
   useEffect(() => {
-    let cancelled = false
+    const cancelledRef = { current: false }
 
     async function start() {
       try {
-        await Promise.all([setupCamera(), initLandmarker()])
-        if (!cancelled) detectLoop()
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: 1280, height: 720, facingMode: "user" },
+        })
+
+        if (cancelledRef.current) {
+          stream.getTracks().forEach(t => t.stop())
+          return
+        }
+
+        streamRef.current = stream
+
+        const video = videoRef.current
+        video.srcObject = stream
+        await new Promise(resolve => { video.onloadedmetadata = resolve })
+        await video.play()
+
+        if (cancelledRef.current) {
+          stream.getTracks().forEach(t => t.stop())
+          video.srcObject = null
+          return
+        }
+
+        const vision = await FilesetResolver.forVisionTasks(WASM_URL)
+        landmarkerRef.current = await HandLandmarker.createFromOptions(vision, {
+          baseOptions: { modelAssetPath: MODEL_URL },
+          runningMode: "VIDEO",
+          numHands: 2,
+          minHandDetectionConfidence: 0.5,
+          minHandPresenceConfidence:  0.5,
+          minTrackingConfidence:      0.7,
+        })
+
+        if (!cancelledRef.current) detectLoop()
       } catch (err) {
         console.error("[useHandLandmarker] init error:", err)
       }
@@ -150,21 +183,14 @@ export function useHandLandmarker(videoRef, canvasRef, onLandmarks, options = {}
     start()
 
     return () => {
-      cancelled = true
+      cancelledRef.current = true
       cancelAnimationFrame(rafRef.current)
 
-      // Stop all camera tracks
-      const video = videoRef.current
-      if (video?.srcObject) {
-        video.srcObject.getTracks().forEach(t => t.stop())
-        video.srcObject = null
-      }
+      streamRef.current?.getTracks().forEach(t => t.stop())
+      streamRef.current = null
 
-      // Dispose landmarker
       landmarkerRef.current?.close?.()
       landmarkerRef.current = null
     }
-  }, []) // intentionally empty — mount/unmount only
-
-  return null // purely side-effect hook
+  }, [])
 }

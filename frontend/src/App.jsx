@@ -7,33 +7,42 @@ import RegisterPage from "./pages/AuthPage/RegisterPage"
 import HomePage     from "./pages/HomePage/HomePage"
 import ProfilePage  from "./pages/ProfilePage/ProfilePage"
 import DictionaryPage from "./pages/DictionaryPage/DictionaryPage"
-import QuizPage     from "./pages/QuizPage/QuizPage"
+import QuizLevelPage from "./pages/QuizPage/QuizLevelPage"
+import QuizQuestionsPage from "./pages/QuizPage/QuizQuestionsPage"
+import QuizResultPage from "./pages/QuizPage/QuizResultPage"
+import { QuizProvider } from "./context/QuizContext"
 
 // Pages without Navbar/Footer
-const BARE_PAGES = new Set([PAGES.LOGIN, PAGES.REGISTER])
+const BARE_PAGES = new Set([
+  PAGES.LOGIN,
+  PAGES.REGISTER,
+  PAGES.QUIZ_QUESTIONS
+])
 
 function AppInner() {
   const { currentPage } = useRouter()
-
   const bare = BARE_PAGES.has(currentPage)
 
-  const page = {
-    [PAGES.LOGIN]:          <LoginPage />,
-    [PAGES.REGISTER]:       <RegisterPage />,
-    [PAGES.HOME]:           <HomePage />,
-    [PAGES.PROFILE]:        <ProfilePage />,
-    [PAGES.DICTIONARY]:     <DictionaryPage />,
-    [PAGES.DICT_CAMERA]:    <DictionaryPage />,
-    [PAGES.QUIZ_LEVEL]:     <QuizPage />,
-    [PAGES.QUIZ_QUESTIONS]: <QuizPage />,
-    [PAGES.QUIZ_RESULT]:    <QuizPage />,
-  }[currentPage] ?? <HomePage />
+  function renderPage() {
+    switch (currentPage) {
+      case PAGES.LOGIN:          return <LoginPage />
+      case PAGES.REGISTER:       return <RegisterPage />
+      case PAGES.HOME:           return <HomePage />
+      case PAGES.PROFILE:        return <ProfilePage />
+      case PAGES.DICTIONARY:
+      case PAGES.DICT_CAMERA:    return <DictionaryPage />
+      case PAGES.QUIZ_LEVEL:     return <QuizLevelPage/>
+      case PAGES.QUIZ_QUESTIONS: return <QuizQuestionsPage/>
+      case PAGES.QUIZ_RESULT:    return <QuizResultPage/>
+      default:                   return <HomePage />
+    }
+  }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       {!bare && <Navbar />}
-      {page}
-      {!bare && <Footer />}
+      {renderPage()}
+      <Footer/>
       <NotificationToast />
     </div>
   )
@@ -44,7 +53,9 @@ export default function App() {
     <AuthProvider>
       <RouterProvider>
         <NotificationProvider>
-          <AppInner />
+          <QuizProvider>
+            <AppInner />
+          </QuizProvider>
         </NotificationProvider>
       </RouterProvider>
     </AuthProvider>
