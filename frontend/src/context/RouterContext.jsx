@@ -14,7 +14,6 @@ export const PAGES = {
   PROFILE:        "profile",
   DICTIONARY:     "dictionary",
   DICT_CAMERA:    "dictionary-camera",   // alphabet detail + camera
-  QUIZ_LEVEL:     "quiz-level",
   QUIZ_QUESTIONS: "quiz-questions",
   QUIZ_RESULT:    "quiz-result",
 }

@@ -17,7 +17,7 @@ export default function HomePage() {
           </p>
         </button>
 
-        <button className={styles.card} onClick={() => navigate(PAGES.QUIZ_LEVEL)}>
+        <button className={styles.card} onClick={() => navigate(PAGES.QUIZ_QUESTIONS)}>
           <h2 className={styles.cardTitle}>Kuis</h2>
           <p className={styles.cardDesc}>
             Uji kemampuanmu mengenali dan mempraktikkan gestur lewat kamera

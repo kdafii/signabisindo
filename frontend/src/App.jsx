@@ -16,7 +16,8 @@ import { QuizProvider } from "./context/QuizContext"
 const BARE_PAGES = new Set([
   PAGES.LOGIN,
   PAGES.REGISTER,
-  PAGES.QUIZ_QUESTIONS
+  PAGES.QUIZ_QUESTIONS,
+  PAGES.QUIZ_RESULT
 ])
 
 function AppInner() {
@@ -31,7 +32,6 @@ function AppInner() {
       case PAGES.PROFILE:        return <ProfilePage />
       case PAGES.DICTIONARY:
       case PAGES.DICT_CAMERA:    return <DictionaryPage />
-      case PAGES.QUIZ_LEVEL:     return <QuizLevelPage/>
       case PAGES.QUIZ_QUESTIONS: return <QuizQuestionsPage/>
       case PAGES.QUIZ_RESULT:    return <QuizResultPage/>
       default:                   return <HomePage />

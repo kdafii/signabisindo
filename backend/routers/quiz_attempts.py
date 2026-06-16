@@ -34,7 +34,7 @@ async def create_attempt(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Quiz level tidak ditemukan")
 
     attempt = QuizAttempt(
-        user_id=body.user_id,
+        user_id=current_user_id,
         quiz_level_id=body.quiz_level_id,
         completed_questions=body.completed_questions,
         skipped_count=body.skipped_count,

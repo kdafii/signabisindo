@@ -22,7 +22,7 @@ export default function LoginPage() {
     try {
       await login(username, password)
       replace(PAGES.HOME)
-    } catch {
+    } catch (err) {
       showError("Login gagal. Periksa username dan password kamu.")
     } finally {
       setLoading(false)

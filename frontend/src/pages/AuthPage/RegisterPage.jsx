@@ -26,7 +26,7 @@ export default function RegisterPage() {
     try {
       await register(username, firstName, lastName, password)
       replace(PAGES.HOME)
-    } catch {
+    } catch (err) {
       showError("Registrasi gagal. Coba lagi.")
     } finally {
       setLoading(false)

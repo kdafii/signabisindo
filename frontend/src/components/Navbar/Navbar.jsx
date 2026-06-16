@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext"
 import styles from "./Navbar.module.css"
 
 export default function Navbar() {
-  const { navigate } = useRouter()
+  const { navigate, currentPage } = useRouter()
   const { user }     = useAuth()
 
   return (
@@ -13,9 +13,17 @@ export default function Navbar() {
       </button>
 
       <div className={styles.links}>
-        <button onClick={() => navigate(PAGES.DICTIONARY)}>Kamus</button>
-        <button onClick={() => navigate(PAGES.QUIZ_LEVEL)}>Kuis</button>
-        <button onClick={() => navigate(user ? PAGES.PROFILE : PAGES.LOGIN)}>
+        <button
+          className={currentPage === PAGES.DICTIONARY ? styles.active : ""}
+          onClick={() => navigate(PAGES.DICTIONARY)}
+        >
+          Kamus
+        </button>
+
+        <button
+          className={currentPage === PAGES.PROFILE ? styles.active : ""}
+          onClick={() => navigate(user ? PAGES.PROFILE : PAGES.LOGIN)}
+        >
           Profil
         </button>
       </div>

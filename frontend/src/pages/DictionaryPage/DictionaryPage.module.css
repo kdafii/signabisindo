@@ -55,7 +55,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(80px, 100px));
+  grid-template-columns: repeat(6, 80px);
   gap: 20px;
   justify-content: center;
 }
@@ -70,6 +70,7 @@
   height: 80px;
 
   border: 1.5px solid var(--color-border-strong);
+  background-color: var(--color-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -210,5 +211,21 @@
 
   .miniGrid {
     grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(4, 80px);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(3, 80px);
+  }
+
+  .gridPage {
+    padding: 24px 16px;
   }
 }
