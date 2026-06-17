@@ -88,6 +88,12 @@ export function AuthProvider({ children }) {
       },
       body: JSON.stringify({ first_name: firstName, last_name: lastName }),
     })
+
+    if (res.status === 401) {
+      logout()  // token expired → langsung logout
+      return
+    }
+
     if (!res.ok) {
       const err = await res.json()
       throw new Error(err.detail ?? "Gagal update profil")

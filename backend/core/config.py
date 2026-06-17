@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     # ── JWT ──
     jwt_secret_key: str = "change-this-in-production"
     jwt_algorithm: str = "HS256"
-    jwt_access_token_expire_minutes: int = 60
+    jwt_access_token_expire_minutes: int = 600
 
     # ── Model ──
     model_path: str = "./bisindo_conv1d.h5"

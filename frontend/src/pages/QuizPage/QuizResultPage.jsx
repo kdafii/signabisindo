@@ -8,7 +8,7 @@ import { useNotification } from "../../context/NotificationContext"
 export default function QuizResultPage() {
   const { level, correct, skippedCount, resetQuiz, submitAttempt } = useQuiz()
   const { navigate } = useRouter()
-  const { error: showError }    = useNotification()
+  const {success, error: showError }    = useNotification()
 
   const [saving, setSaving] = useState(true)
 
@@ -18,6 +18,8 @@ export default function QuizResultPage() {
     submitAttempt(correct, skippedCount)
       .catch(err => showError(err.message || "Gagal menyimpan hasil quiz"))
       .finally(() => setSaving(false))
+    
+    success("Berhasil Menyelesaikan Kuis")
   }, []) // sekali saja saat mount
 
   if (!level) {

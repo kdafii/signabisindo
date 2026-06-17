@@ -23,6 +23,10 @@ export default function ProfilePage() {
       headers: { Authorization: `Bearer ${user.access_token}` },
     })
       .then(res => {
+        if (res.status === 401) {
+          logout()  // token expired → langsung logout
+          return
+        }
         if (!res.ok) throw new Error()
         return res.json()
       })

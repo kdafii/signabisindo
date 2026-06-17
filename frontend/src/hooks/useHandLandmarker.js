@@ -114,7 +114,7 @@ export function useHandLandmarker(videoRef, canvasRef, onLandmarks, options = {}
   // ── Camera setup ────────────────────────────────────────────────────────────
   const setupCamera = useCallback(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
-      video: { width: 1280, height: 720, facingMode: "user" },
+      video: { width: 640, height: 480, facingMode: "user" },
     })
 
     const video = videoRef.current
@@ -143,7 +143,7 @@ export function useHandLandmarker(videoRef, canvasRef, onLandmarks, options = {}
     async function start() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { width: 1280, height: 720, facingMode: "user" },
+          video: { width: 640, height: 480, facingMode: "user" },
         })
 
         if (cancelledRef.current) {
