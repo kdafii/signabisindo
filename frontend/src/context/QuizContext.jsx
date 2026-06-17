@@ -1,17 +1,29 @@
 import { createContext, useContext, useRef, useState } from "react"
 import {QUIZ_LEVELS} from "../utils/constants"
+import { useAuth } from "./AuthContext"
 
 const QuizContext = createContext()
 const API = import.meta.env.VITE_API_BASE_URL
 
 function generateRandomLetters(letters, total) {
-  return Array.from({ length: total }, () =>
-    letters[Math.floor(Math.random() * letters.length)]
-  )
+  const result = []
+
+  for (let i = 0; i < total; i++) {
+    let randomLetter
+
+    do {
+      randomLetter = letters[Math.floor(Math.random() * letters.length)]
+    } while (i > 0 && randomLetter === result[i - 1])
+
+    result.push(randomLetter)
+  }
+
+  return result
 }
 
 export function QuizProvider({ children }) {
   const LEVEL_1 = QUIZ_LEVELS[0]
+  const { user } = useAuth()
 
   const [soalIndex, setSoalIndex] = useState(0)
   const [correct, setCorrect] = useState(0)
@@ -33,7 +45,7 @@ export function QuizProvider({ children }) {
     setRandomLetters(generateRandomLetters(level.letters, level.totalSoal))
   }
 
-  async function submitAttempt(user, finalCorrect, finalSkipped) {
+  async function submitAttempt(finalCorrect, finalSkipped) {
     const completedAt = new Date().toISOString()  // simpan dengan Z dulu
     const started = startedAtRef.current           // juga ada Z
 

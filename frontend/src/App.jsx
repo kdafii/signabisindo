@@ -1,48 +1,48 @@
-import { RouterProvider, useRouter, PAGES } from "./context/RouterContext"
-import { AuthProvider } from "./context/AuthContext"
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom"
+import { RouterProvider, PAGES } from "./context/RouterContext"
+import { AuthProvider, useAuth } from "./context/AuthContext"
 import { NotificationProvider } from "./context/NotificationContext"
-import { Navbar, Footer, NotificationToast } from "./components"
-import LoginPage    from "./pages/AuthPage/LoginPage"
-import RegisterPage from "./pages/AuthPage/RegisterPage"
-import HomePage     from "./pages/HomePage/HomePage"
-import ProfilePage  from "./pages/ProfilePage/ProfilePage"
-import DictionaryPage from "./pages/DictionaryPage/DictionaryPage"
-import QuizLevelPage from "./pages/QuizPage/QuizLevelPage"
-import QuizQuestionsPage from "./pages/QuizPage/QuizQuestionsPage"
-import QuizResultPage from "./pages/QuizPage/QuizResultPage"
 import { QuizProvider } from "./context/QuizContext"
+import { Navbar, Footer, NotificationToast } from "./components"
+import LoginPage         from "./pages/AuthPage/LoginPage"
+import RegisterPage      from "./pages/AuthPage/RegisterPage"
+import HomePage          from "./pages/HomePage/HomePage"
+import ProfilePage       from "./pages/ProfilePage/ProfilePage"
+import DictionaryPage    from "./pages/DictionaryPage/DictionaryPage"
+import QuizQuestionsPage from "./pages/QuizPage/QuizQuestionsPage"
+import QuizResultPage    from "./pages/QuizPage/QuizResultPage"
 
-// Pages without Navbar/Footer
 const BARE_PAGES = new Set([
   PAGES.LOGIN,
   PAGES.REGISTER,
   PAGES.QUIZ_QUESTIONS,
-  PAGES.QUIZ_RESULT
+  PAGES.QUIZ_RESULT,
 ])
 
-function AppInner() {
-  const { currentPage } = useRouter()
-  const bare = BARE_PAGES.has(currentPage)
+function RequireAuth({ children }) {
+  const { user } = useAuth()
+  return user ? children : <Navigate to={PAGES.LOGIN} replace />
+}
 
-  function renderPage() {
-    switch (currentPage) {
-      case PAGES.LOGIN:          return <LoginPage />
-      case PAGES.REGISTER:       return <RegisterPage />
-      case PAGES.HOME:           return <HomePage />
-      case PAGES.PROFILE:        return <ProfilePage />
-      case PAGES.DICTIONARY:
-      case PAGES.DICT_CAMERA:    return <DictionaryPage />
-      case PAGES.QUIZ_QUESTIONS: return <QuizQuestionsPage/>
-      case PAGES.QUIZ_RESULT:    return <QuizResultPage/>
-      default:                   return <HomePage />
-    }
-  }
+function AppInner() {
+  const location = useLocation()  // import dari react-router-dom
+  const bare = BARE_PAGES.has(location.pathname)
 
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       {!bare && <Navbar />}
-      {renderPage()}
-      <Footer/>
+      <Routes>
+        <Route path={PAGES.LOGIN}      element={<LoginPage />} />
+        <Route path={PAGES.REGISTER}   element={<RegisterPage />} />
+        <Route path={PAGES.HOME}       element={<RequireAuth><HomePage /></RequireAuth>} />
+        <Route path={PAGES.PROFILE}    element={<RequireAuth><ProfilePage /></RequireAuth>} />
+        <Route path={PAGES.DICTIONARY} element={<RequireAuth><DictionaryPage /></RequireAuth>} />
+        <Route path={PAGES.DICT_CAMERA} element={<RequireAuth><DictionaryPage /></RequireAuth>} />
+        <Route path={PAGES.QUIZ_QUESTIONS} element={<RequireAuth><QuizQuestionsPage /></RequireAuth>} />
+        <Route path={PAGES.QUIZ_RESULT}    element={<RequireAuth><QuizResultPage /></RequireAuth>} />
+        <Route path="*" element={<Navigate to={PAGES.HOME} replace />} />
+      </Routes>
+      <Footer />
       <NotificationToast />
     </div>
   )
@@ -50,14 +50,16 @@ function AppInner() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <RouterProvider>
-        <NotificationProvider>
-          <QuizProvider>
-            <AppInner />
-          </QuizProvider>
-        </NotificationProvider>
-      </RouterProvider>
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <RouterProvider>
+          <NotificationProvider>
+            <QuizProvider>
+              <AppInner />
+            </QuizProvider>
+          </NotificationProvider>
+        </RouterProvider>
+      </AuthProvider>
+    </BrowserRouter>
   )
 }
