@@ -229,3 +229,42 @@
     padding: 24px 16px;
   }
 }
+
+.navigationButtons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.navBtn {
+  min-width: 100px;
+  padding: 12px 20px;
+
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: background 0.15s ease;
+}
+
+.navBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.navBtnPrimary {
+  background: var(--color-accent);
+  color: var(--color-accent-fg);
+  border-color: var(--color-accent);
+}
+
+.navBtnPrimary:hover:not(:disabled) {
+  opacity: 0.88;
+}

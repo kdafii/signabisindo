@@ -27,7 +27,18 @@ function AlphabetGrid({ onSelect }) {
 }
 
 // ─── Sub-view: Alphabet detail ──────────────────────────────────────────────
-function AlphabetDetail({ letter, onBack, onOpenCamera }) {
+function AlphabetDetail({ letter, onBack, onOpenCamera, onSelectLetter }) {
+
+  const currentIndex = ALPHABET.indexOf(letter)
+
+  const prevLetter =
+    currentIndex > 0 ? ALPHABET[currentIndex - 1] : null
+
+  const nextLetter =
+    currentIndex < ALPHABET.length - 1
+      ? ALPHABET[currentIndex + 1]
+      : null
+
   return (
     <main className={styles.detailPage}>
       <button className={styles.backBtn} onClick={onBack}>&#60; Back</button>
@@ -47,6 +58,24 @@ function AlphabetDetail({ letter, onBack, onOpenCamera }) {
       <button className={styles.primaryBtn} onClick={onOpenCamera}>
         Coba dengan kamera
       </button>
+
+      <div className={styles.navigationButtons}>
+        <button
+          className={styles.navBtn}
+          onClick={() => onSelectLetter(prevLetter)}
+          disabled={!prevLetter}
+        >
+          ← Previous
+        </button>
+
+        <button
+          className={`${styles.navBtn} ${styles.navBtnPrimary}`}
+          onClick={() => onSelectLetter(nextLetter)}
+          disabled={!nextLetter}
+        >
+          Next →
+        </button>
+      </div>
     </main>
   )
 }
@@ -159,6 +188,7 @@ export default function DictionaryPage() {
         letter={letter}
         onBack={() => setView("grid")}
         onOpenCamera={() => setView("camera")}
+        onSelectLetter={setLetter}
       />
     )
   }
