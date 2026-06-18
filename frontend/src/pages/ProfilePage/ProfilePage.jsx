@@ -41,7 +41,7 @@ export default function ProfilePage() {
       return
     }
     updateProfile(firstName, lastName)
-    success("Profil berhasil disimpan.")
+    success(`Profil berhasil disimpan. ${API}`)
   }
 
   function handleLogout() {
