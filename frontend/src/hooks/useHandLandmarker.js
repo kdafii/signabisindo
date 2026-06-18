@@ -143,7 +143,11 @@ export function useHandLandmarker(videoRef, canvasRef, onLandmarks, options = {}
     async function start() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { width: 640, height: 480, facingMode: "user" },
+          video: { 
+            width: { ideal: 640 },
+            height: { ideal: 480 },
+            facingMode: "user"
+          },
         })
 
         if (cancelledRef.current) {

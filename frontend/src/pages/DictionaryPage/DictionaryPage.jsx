@@ -67,15 +67,8 @@ function AlphabetCamera({ letter, setLetter, onBack }) {
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = await res.json()
       setFeedback(data.predicted_label === letter ? "correct" : "wrong")
-    } catch (err) {
-      console.error("Full error:", err)
-
-      showError(`
-        API_URL: ${API_URL}
-        Name: ${err.name}
-        Message: ${err.message}
-        Stack: ${err.stack}
-      `)
+    } catch{
+      showError("Gagal konek ke backend deteksi")
     }
   }, [letter, showError])
 

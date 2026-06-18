@@ -9,4 +9,4 @@ export const QUIZ_LEVELS = [
 ]
 
 /** API base URL — update to match your backend */
-export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000"
+export const API_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000"
