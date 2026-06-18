@@ -61,6 +61,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="BISINDO Learning API",
     description="API untuk website pembelajaran BISINDO dengan evaluasi gestur real-time",
+    root_path="/bisindo-api",
     version="3.0.0",
     lifespan=lifespan,
 )

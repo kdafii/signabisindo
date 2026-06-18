@@ -23,7 +23,7 @@ function generateRandomLetters(letters, total) {
 
 export function QuizProvider({ children }) {
   const LEVEL_1 = QUIZ_LEVELS[0]
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
 
   const [soalIndex, setSoalIndex] = useState(0)
   const [correct, setCorrect] = useState(0)
@@ -73,6 +73,11 @@ export function QuizProvider({ children }) {
         completed_at:        completedAt.replace("Z", ""),  // strip hanya di sini
       }),
     })
+
+    if (res.status === 401) {
+      logout()  // token expired → langsung logout
+      return
+    }
 
     if (!res.ok) {
       const err = await res.json()

@@ -92,7 +92,7 @@ function AlphabetCamera({ letter, setLetter, onBack }) {
           </p>
           {feedback && (
             <div className={`${styles.feedbackBar} ${styles[feedback]}`}>
-              {feedback === "correct" ? "✓ BENAR" : "✗ SALAH — coba lagi"}
+              {feedback === "correct" ? "BENAR" : "SALAH — coba lagi"}
             </div>
           )}
         </div>
