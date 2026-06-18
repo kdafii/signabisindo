@@ -71,6 +71,7 @@ function AlphabetCamera({ letter, setLetter, onBack }) {
       console.error("Full error:", err)
 
       showError(`
+        API_URL: ${API_URL}
         Name: ${err.name}
         Message: ${err.message}
         Stack: ${err.stack}
