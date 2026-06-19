@@ -124,6 +124,9 @@ export default function QuizQuestionsPage() {
       </div>
 
       <CameraCV onLandmarks={handleLandmarks} predictInterval={500} />
+      <p className={styles.cameraHint}>
+        Tunggu landmark muncul · gunakan tangan kanan/kiri bergantian jika ada gangguan
+      </p>
 
       <p className={styles.hint}>Tunjukkan gestur huruf {letter} ke kamera.</p>
 

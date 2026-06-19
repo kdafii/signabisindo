@@ -181,3 +181,10 @@
 .kembaliBtn:hover {
   opacity: 0.88;
 }
+
+.cameraHint {
+  font-size: 0.78rem;
+  color: #6b7280;
+  text-align: center;
+  margin-top: 6px;
+}

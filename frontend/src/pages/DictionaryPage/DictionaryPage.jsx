@@ -116,8 +116,8 @@ function AlphabetCamera({ letter, setLetter, onBack }) {
         <div className={styles.cameraCol}>
           <h1 className={styles.detailTitle}>Huruf {letter}</h1>
           <CameraCV onLandmarks={handleLandmarks} predictInterval={300} />
-          <p className={styles.detailDesc}>
-            Tunjukkan gestur huruf {letter} ke kamera.
+          <p className={styles.cameraHint}>
+            Tunggu landmark muncul · gunakan tangan kanan/kiri bergantian jika ada gangguan
           </p>
           {feedback && (
             <div className={`${styles.feedbackBar} ${styles[feedback]}`}>
