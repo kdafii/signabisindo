@@ -32,25 +32,36 @@ export default function LoginPage() {
   return (
     <main className={styles.page}>
       <div className={styles.box}>
-        <h1 className={styles.heading}>Login</h1>
+        <h1 className={styles.appTitle}>
+          <span style={{ fontWeight: 400 }}>Signa</span>BISINDO
+        </h1>
 
-        <input
-          className={styles.input}
-          type="text"
-          placeholder="john_doe"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-          autoComplete="username"
-        />
-        <input
-          className={styles.input}
-          type="password"
-          placeholder="••••••"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          autoComplete="current-password"
-          onKeyDown={e => e.key === "Enter" && handleSubmit()}
-        />
+        <div className={styles.field}>
+          <label className={styles.label} htmlFor="username">Username</label>
+          <input
+            id="username"
+            className={styles.input}
+            type="text"
+            placeholder="john_doe"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            autoComplete="username"
+          />
+        </div>
+
+        <div className={styles.field}>
+          <label className={styles.label} htmlFor="password">Password</label>
+          <input
+            id="password"
+            className={styles.input}
+            type="password"
+            placeholder="••••••"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            autoComplete="current-password"
+            onKeyDown={e => e.key === "Enter" && handleSubmit()}
+          />
+        </div>
 
         <button
           className={styles.submitBtn}
